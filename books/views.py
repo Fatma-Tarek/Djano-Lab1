@@ -36,6 +36,12 @@ def edit(request,id):
         "book" : book
     })
 
+def delete(request,id):
+    book = Book.objects.get(pk=id)
+    book.delete()
+    return redirect("index")
+
+
 
 
 
