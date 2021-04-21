@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>books</title>
-</head>
-
-<body>
+{% extends 'layout/main.html' %}
+{% block title %}  Books {% endblock %}
+{% block body%}
     <h1>List Books</h1>
     {% for book in books %}
 
@@ -14,6 +9,4 @@
         <hr>
 
     {% endfor %}
-</body>
-
-</html>
+{% endblock %}

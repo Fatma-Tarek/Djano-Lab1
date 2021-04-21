@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Delete book</title>
-</head>
-
-<body>
+{% extends 'layout/main.html' %}
+{% block title %} delete book {% endblock %}
+{% block body%}
     <form action="{% url 'delete' book.id %}" method="POST">
         {% csrf_token %}
        {{ form.as_p }}
        <button type="submit">delete Book</button>
    </form>
-</body>
-
-</html>
+{% endblock %}
