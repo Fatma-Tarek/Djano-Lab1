@@ -24,5 +24,19 @@ def create(request):
     })
 
 
+def edit(request,id):
+    book = Book.objects.get(pk=id)
+    form = BookForm(request.POST or None,instance=book)
+    if form.is_valid():
+        form.save()
+        return redirect("index")
+
+    return render(request,"books/edit.html",{
+        "form" : form,
+        "book" : book
+    })
+
+
+
 
 

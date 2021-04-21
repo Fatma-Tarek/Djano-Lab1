@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit book</title>
+</head>
+
+<body>
+   <form action="{% url 'edit' book.id %}" method="POST">
+       {% csrf_token %}
+       {{ form.as_p }}
+       <button type="submit">update Book</button>
+   </form>
+</body>
+
+</html>
