@@ -3,7 +3,7 @@
 {% block body%}
    <form action="{% url 'show' book.id %}" method="POST">
        {% csrf_token %}
-       <h2>{{ book.title }}</h2>
+       <a href="/books/" style="text-decoration: none"><h2>{{ book.title }}</h2></a>
        <p> {{ book.content }}</p>
    </form>
 {% endblock %}

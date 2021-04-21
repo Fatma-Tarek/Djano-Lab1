@@ -5,8 +5,14 @@
     {% for book in books %}
 
         <h2>{{ book.title }}</h2>
-        <p> {{ book.content }}</p>
+        <p > {{ book.content }}</p>
+        <div style=" margin-right: 150px;display:inline">
+        <button style="background-color: #f44336;"><a href="{% url 'delete' book.id %}" style="text-decoration: none">Delete</a></button>
+        <button style="background-color: #008CBA;"><a href="{% url 'edit' book.id %}" style="text-decoration: none">Edit</a></button>
+        <button><a href="{% url 'show' book.id %}" style="text-decoration: none">show</a></button>
+        </div>
         <hr>
 
     {% endfor %}
+    <button style="background-color: #4CAF50;"><a href="{% url 'create' %}" style="text-decoration: none">Create new Book</a></button>
 {% endblock %}
