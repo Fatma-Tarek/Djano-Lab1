@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>create book</title>
+</head>
+
+<body>
+   <form action="{% url 'create' %}" method="POST">
+       {% csrf_token %}
+       {{ form.as_p }}
+       <button type="submit">Add Book</button>
+   </form>
+</body>
+
+</html>
