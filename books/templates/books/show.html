@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit book</title>
+</head>
+
+<body>
+   <form action="{% url 'show' book.id %}" method="POST">
+       {% csrf_token %}
+       <h2>{{ book.title }}</h2>
+       <p> {{ book.content }}</p>
+   </form>
+</body>
+
+</html>

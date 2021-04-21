@@ -40,8 +40,23 @@ def delete(request,id):
     book = Book.objects.get(pk=id)
     book.delete()
     return redirect("index")
+    ## Another way to delete book after preview form
+    #book = Book.objects.get(pk=id)
+    #form = BookForm(request.POST or None,instance=book)
+    #if form.is_valid():
+    #    book.delete()
+    #    return redirect("index")
 
+    #return render(request,"books/delete.html",{
+    #    "form" : form,
+    #    "book" : book
+    #})
 
+def show(request,id):
+    book = Book.objects.get(pk=id)
+    return render(request,"books/show.html",{
+        "book" : book
+    })
 
 
 
