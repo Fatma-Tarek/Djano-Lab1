@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import BookForm
 from .models import Book
+from .models import Isbn
 
 # Create your views here.
 #request mandatory 
@@ -16,13 +17,15 @@ def index(request):
 def create(request):
     form = BookForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        isbn=Isbn(book_author=form.cleaned_data.get('author'))
+        isbn.save()
+        book=Book.objects.create(title=form.cleaned_data.get('title'), content =form.cleaned_data.get('content') ,author=form.cleaned_data.get('author'),isbn=isbn,tag=form.cleaned_data.get('tag'))
+        Categories=book.Categories.set(form.cleaned_data.get('Categories'))
+        book.save()
         return redirect("index")
-
     return render(request,"books/create.html",{
-        "form" : form
+        "form":form
     })
-
 
 def edit(request,id):
     book = Book.objects.get(pk=id)
