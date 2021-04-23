@@ -9,6 +9,7 @@ class BookInLine(admin.StackedInline):
     extra = 1
 
 class TagAdmin(admin.ModelAdmin):
+    form = BookForm
     inlines = [BookInLine]
 
 

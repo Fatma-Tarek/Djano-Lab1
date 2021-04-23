@@ -23,8 +23,10 @@ class Isbn(models.Model):
     isbn_num = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
     def __str__(self):
-        #return self.isbn_num
-        return f"auther {self.book_author} | num {self.isbn_num} "
+        return str(self.isbn_num)
+        #return f"auther {self.book_author} | num {self.isbn_num} "
+        #return f"{self.book_author}"
+        #__str__ returned non-string (type UUID)
 
 
 

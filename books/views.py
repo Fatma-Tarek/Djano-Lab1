@@ -3,7 +3,10 @@ from django.http import HttpResponse
 from .forms import BookForm
 from .models import Book
 from .models import Isbn
+from django.contrib.auth.decorators import login_required , permission_required
 
+@login_required(login_url="/login")
+@permission_required(["books.view_book"], raise_exception=True)
 # Create your views here.
 #request mandatory 
 def index(request):
@@ -14,12 +17,18 @@ def index(request):
         "books" : books
     })
 
+@login_required(login_url="/login")
 def create(request):
     form = BookForm(request.POST or None)
     if form.is_valid():
         isbn=Isbn(book_author=form.cleaned_data.get('author'))
         isbn.save()
-        book=Book.objects.create(title=form.cleaned_data.get('title'), content =form.cleaned_data.get('content') ,author=form.cleaned_data.get('author'),isbn=isbn,tag=form.cleaned_data.get('tag'))
+        book=Book.objects.create(title=form.cleaned_data.get('title'), 
+            content =form.cleaned_data.get('content') ,
+            author=form.cleaned_data.get('author'),
+            isbn=isbn,
+            tag=form.cleaned_data.get('tag')
+        )
         Categories=book.Categories.set(form.cleaned_data.get('Categories'))
         book.save()
         return redirect("index")
@@ -38,7 +47,7 @@ def edit(request,id):
         "form" : form,
         "book" : book
     })
-
+@permission_required(["books.delete_book"], raise_exception=True)
 def delete(request,id):
     book = Book.objects.get(pk=id)
     book.delete()

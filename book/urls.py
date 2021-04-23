@@ -18,6 +18,8 @@ from django.urls import path , include
 # include if any books search in books dir and go to urls file
 
 urlpatterns = [
+    path("",include("django.contrib.auth.urls")),
+    path("",include("accounts.urls")),
     path('admin/', admin.site.urls),
     path('books/',include("books.urls"))
 ]

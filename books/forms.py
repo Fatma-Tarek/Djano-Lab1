@@ -25,15 +25,18 @@ class BookForm (forms.ModelForm):
     def clean(self):
         super(BookForm , self).clean()
         title = self.cleaned_data.get('title')
+        category = self.cleaned_data.get("Categories")
+        #nameOfCategory = Category.objects.filter(id=category).first()
         #category = self.cleaned_data.get("Categories")
-        #nameOfCategory = Category.objects.get(id=category)
         #newName = nameOfCategory[0].title
+        #print(nameOfCategory )
         ##############################
         #newName = Category.objects.order_by('id', category).first()
+        # Category.objects.filter(category=category, subcategory=subcategory, kind=kind[0], available=True)
 
         if (len(title) < 10) or (len(title) > 50):
             raise ValidationError("book title must be  between 10 & 50 characters")
-        #if len(newName) < 2:
+        #if len(nameOfCategory) < 2:
         #   raise ValidationError("The minimum length of a category name is 2 characters")
 
         return self.cleaned_data
