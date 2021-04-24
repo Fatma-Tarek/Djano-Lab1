@@ -9,3 +9,18 @@ def index(request):
     books = Book.objects.all()
     serializer = BookSerializer(instance=books, many= True)
     return Response(data=serializer.data, status= status.HTTP_200_OK)
+
+@api_view(["Post"])
+def create(request):
+    serializer = BookSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(data={
+            "success": True,
+            "message": "Book has been created successfully"
+        }, status= status.HTTP_201_CREATED)
+
+    return Response(data={
+        "success": False,
+        "errors": serializer.errors            
+    },status= status.HTTP_400_BAD_REQUEST)
