@@ -21,19 +21,11 @@ def index(request):
 def create(request):
     form = BookForm(request.POST or None)
     if form.is_valid():
-        isbn=Isbn(book_author=form.cleaned_data.get('author'))
-        isbn.save()
-        book=Book.objects.create(title=form.cleaned_data.get('title'), 
-            content =form.cleaned_data.get('content') ,
-            author=form.cleaned_data.get('author'),
-            isbn=isbn,
-            tag=form.cleaned_data.get('tag')
-        )
-        Categories=book.Categories.set(form.cleaned_data.get('Categories'))
-        book.save()
+        form.save()
         return redirect("index")
+
     return render(request,"books/create.html",{
-        "form":form
+        "form" : form
     })
 
 def edit(request,id):
