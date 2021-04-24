@@ -27,7 +27,31 @@ def create(request):
     return render(request,"books/create.html",{
         "form" : form
     })
+##############################################
+# def create(request):
+#     form = BookForm(request.POST or None)
+#     if form.is_valid():
+#         form_author=form.cleaned_data['author']
+#         isbn_obj=Isbn(book_author = form_author)
+#         #form.cleaned_data['isbn'] = isbn_obj.isbn_num
+#         #Book.isbn =  isbn_obj.isbn_num
+#         isbn_obj.save()
+#         book_obj=Book.objects(
+#         title=form.cleaned_data['title'],
+#         content =form.cleaned_data['content'],
+#         author =form.cleaned_data['author'],
+#         tag = form.cleaned_data['tag'],
+#         isbn = isbn_obj
+#         )
+#         book_obj.Categories.add(*form.cleaned_data['categories'])
+#         #form.save()
+#         book_obj.save()
+#         return redirect("index")
 
+#     return render(request,"books/create.html",{
+#         "form" : form
+#     })
+############################################
 def edit(request,id):
     book = Book.objects.get(pk=id)
     form = BookForm(request.POST or None,instance=book)
