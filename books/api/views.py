@@ -2,7 +2,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from books.models import Book
 from .serializers import BookSerializer , UserSerializer
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+from django.http.response import JsonResponse
+
 
 @api_view(["POST"])
 def api_signup(request):
@@ -23,12 +26,36 @@ def api_signup(request):
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def index(request):
     books = Book.objects.all()
     serializer = BookSerializer(instance=books, many= True)
     return Response(data=serializer.data, status= status.HTTP_200_OK)
 
-@api_view(["Post"])
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def view(request,id):
+    books = Book.objects.filter(id=id)
+    serializer = BookSerializer(instance=books, many= True)
+    return Response(data=serializer.data, status= status.HTTP_200_OK)
+
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def destroy(request,id):
+    books = Book.objects.get(id=id).delete()
+    #return Response()
+    if books:
+        return Response(data={
+                "success": True,
+                "message": "Book has been deleted successfully"
+        }, status= status.HTTP_200_OK)       
+
+
+
+@api_view(["POST"])
 def create(request):
     serializer = BookSerializer(data=request.data)
     if serializer.is_valid():
@@ -42,3 +69,14 @@ def create(request):
         "success": False,
         "errors": serializer.errors            
     },status= status.HTTP_400_BAD_REQUEST)
+
+@api_view(["PUT"])
+def update(request,id):
+    book = Book.objects.get(pk=id)
+    tutorial_serializer = BookSerializer(data=request.data, instance=book, partial=True)
+    if tutorial_serializer.is_valid(): 
+        tutorial_serializer.save() 
+        return JsonResponse(tutorial_serializer.data) 
+    return JsonResponse(tutorial_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
+    

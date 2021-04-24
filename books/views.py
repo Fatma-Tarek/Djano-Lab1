@@ -63,6 +63,7 @@ def edit(request,id):
         "form" : form,
         "book" : book
     })
+    
 @permission_required(["books.delete_book"], raise_exception=True)
 def delete(request,id):
     book = Book.objects.get(pk=id)
